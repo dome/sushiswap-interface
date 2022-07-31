@@ -2,13 +2,14 @@ import { FortmaticConnector as FortmaticConnectorCore } from 'web3-react-fortmat
 
 export const OVERLAY_READY = 'OVERLAY_READY'
 
-type FormaticSupportedChains = 1 | 3 | 4 | 42
+type FormaticSupportedChains = 1 | 3 | 4 | 42 | 3502
 
 const CHAIN_ID_NETWORK_ARGUMENT: { readonly [chainId in FormaticSupportedChains]: string | undefined } = {
   1: undefined,
   3: 'ropsten',
   4: 'rinkeby',
   42: 'kovan',
+  3502: 'jfintest',
 }
 
 export class FortmaticConnector extends FortmaticConnectorCore {
@@ -16,13 +17,20 @@ export class FortmaticConnector extends FortmaticConnectorCore {
     if (!this.fortmatic) {
       // @ts-ignore
       const { default: Fortmatic } = await import('fortmatic')
-
+      const customNodeOptions = {
+        rpcUrl: 'https//rpc.testnet.jfinchain.com', // your own node url
+        chainId: 3502, // chainId of your own node
+      }
+      /*
       const { apiKey, chainId } = this as any
       if (chainId in CHAIN_ID_NETWORK_ARGUMENT) {
-        this.fortmatic = new Fortmatic(apiKey, CHAIN_ID_NETWORK_ARGUMENT[chainId as FormaticSupportedChains])
+        // this.fortmatic = new Fortmatic(apiKey, CHAIN_ID_NETWORK_ARGUMENT[chainId as FormaticSupportedChains])
+        this.fortmatic = new Fortmatic(apiKey, customNodeOptions)
       } else {
         throw new Error(`Unsupported network ID: ${chainId}`)
       }
+        this.fortmatic = new Fortmatic(apiKey, customNodeOptions)
+    */
     }
 
     const provider = this.fortmatic.getProvider()

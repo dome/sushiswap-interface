@@ -155,7 +155,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
       const FortmaticConnector = (await import('web3-react-fortmatic-connector')).FortmaticConnector
       return new FortmaticConnector({
         apiKey: process.env.NEXT_PUBLIC_FORTMATIC_API_KEY ?? '',
-        chainId: 1,
+        chainId: 42,
       })
     },
     name: 'Fortmatic',
@@ -168,9 +168,13 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   Portis: {
     connector: async () => {
       const PortisConnector = (await import('web3-react-portis-connector')).PortisConnector
+      const myPrivateEthereumNode = {
+        nodeUrl: 'https://rpc.testnet.jfinchain.com',
+        chainId: 3502,
+      }
       return new PortisConnector({
         dAppId: process.env.NEXT_PUBLIC_PORTIS_ID ?? '',
-        networks: [1],
+        networks: [3502],
       })
     },
     name: 'Portis',
